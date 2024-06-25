@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bigip-ctlr
+  namespace: cis-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bigip-ctlr
+  template:
+    metadata:
+      name: bigip-ctlr
+      labels:
+        app: bigip-ctlr
+    spec:
+      serviceAccountName: k8s-bigip-ctlr
+      containers:
+        - name: bigip-ctlr
+          image: f5networks/k8s-bigip-ctlr:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: BIGIP_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: bigip-login
+                  key: username
+            - name: BIGIP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bigip-login
+                  key: password
+          command: ["/app/bin/k8s-bigip-ctlr"]
+          args: 
+            - --bigip-username=$(BIGIP_USERNAME)
+            - --bigip-password=$(BIGIP_PASSWORD)
+            - --bigip-url=https://10.1.1.4:8443
+            - --insecure=true
+            - --bigip-partition=kubernetes
+            - --pool-member-type=cluster
+            - --as3-validation=true
+            - --disable-teems=true
+            - --log-as3-response=true
+            - --custom-resource-mode=true
+            - --static-routing-mode=true
+            - --orchestration-cni=antrea
+            - --ipam=true
+            - --log-level=DEBUG
