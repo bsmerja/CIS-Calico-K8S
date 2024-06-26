@@ -64,9 +64,20 @@ kubectl create -f ipam-clusterrolebinding.yaml
 ```
 kubectl create -f cis-customresourcedefinitions.yaml
 ```
-8. Deploy CIS and ipam
+8. In case cluster does not have internet access, please download CIS and IPAM image and push in your private repo
 ```
-kubectl create -f cis-deploy.yaml
+docker pull f5networks/k8s-bigip-ctlr:latest
+docker pull f5networks/f5-ipam-controller:latest
+```
+9. Update following files with respective private image
+```
+vim cis-staticroute-deployemnt-with-ipam.yaml
+vim ipam-controller-deployment.yaml
+```
+10. Deploy CIS and ipam
+```
+kubectl create -f cis-staticroute-deployemnt-with-ipam.yaml
+kubectl create -f ipam-controller-deployment.yaml
 ```
 # BIGIP static route should be updated automatically, based OVN 
 
