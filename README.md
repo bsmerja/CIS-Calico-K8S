@@ -2,7 +2,7 @@
 
 ## BIGIP CIS Integration in K8S environment with static route, IPAM and CRD in OpenShift OVN-Kubernetes
 
-Steps to Follow:
+Prerequisite:
 
 1. Install latest AS3 extention on BIG-IP.
 
@@ -23,6 +23,10 @@ Steps to Follow:
   {"version":"3.51.0","release":"5","schemaCurrent":"3.51.0","schemaMinimum":"3.0.0"}
 
 2. Create partition "kubernetes"
+3. Create a directory in /var/tmp/ on one of nodes of cluster where IPAM can create DB for saving persistent data
+```
+mkdir -p /var/tmp/cis_ipam
+chmod 776 -R /var/tmp/cis_ipam
 
 ### BIGIP CIS Installation manually in separate namespace 
 
@@ -30,30 +34,38 @@ Steps to Follow:
 ```
 kubectl create ns cis-system
 ```
-3. Service Account creation:
+2. Get hostname on which /var/tmp/cis_ipam directory is created, update "ipam-pv-and-pvc.yaml" and create Persistent Volume and Persistent Volume claim for ipam
 ```
-oc create serviceaccount bigip-ctlr -n kube-system
+kubectl get nodes -o yaml | grep "kubernetes.io/hostname" # to find hostname
+
+kubectl create -f ipam-pv-and-pvc.yaml
 ```
-2. Elevate Service Account:
+3. Create Service Account for CIS and IPAM in cis-system name space:
 ```
-oc adm policy add-cluster-role-to-user cluster-admin -z bigip-ctlr -n kube-system
+kubectl create -f cis-service-account.yaml
+kubectl create -f ipam-service-account.yaml
 ```
-3. Create secret for BIG-IP admin username and apssword:
+4. Create clusterole for CIS and IPAM:
 ```
-oc create secret generic bigip-login -n kube-system --from-literal=username= --from-literal=password=<big-ip-admin-password>
+kubectl create -f cis-clusterrole.yaml
+kubectl create -f ipam-clusterrole.yaml
 ```
-4. Create clusterrole and clusterrolebinding
+5. Create secret for BIG-IP admin username and apssword:
 ```
-oc create -f cis-clusterrole.yaml
-oc create -f cis-clusterrolebinding.yaml
+kubectl create secret generic bigip-login -n kube-system --from-literal=username=<bigip-admin-username> --from-literal=password=<bigip-admin-password>
 ```
-5. Create crds:
+6. Create clusterrolebinding for CIS and IPAM
 ```
-oc create -f https://raw.githubusercontent.com/F5Networks/k8s-bigip-ctlr/2.x-master/docs/config_examples/customResourceDefinitions/customresourcedefinitions.yml
+kubectl create -f cis-clusterrolebinding.yaml
+kubectl create -f ipam-clusterrolebinding.yaml
 ```
-6. Deploy CIS
+7. Create crds:
 ```
-oc create -f cis-deploy.yaml
+kubectl create -f cis-customresourcedefinitions.yaml
+```
+8. Deploy CIS and ipam
+```
+kubectl create -f cis-deploy.yaml
 ```
 # BIGIP static route should be updated automatically, based OVN 
 
