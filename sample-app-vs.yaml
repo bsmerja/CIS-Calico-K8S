@@ -1,0 +1,24 @@
+apiVersion: "cis.f5.com/v1"
+kind: VirtualServer
+metadata:
+  name: my-new-virtual-server
+  labels:
+    f5cr: "true"
+spec:
+# host: cafe.example.com
+# ipamLabel: "Test"
+  virtualServerAddress: "172.16.3.4"
+  virtualServerHTTPPort: 8080
+  defaultPool:
+    service: f5-hello-world-web
+    servicePort: f5-hello-world-web
+    reference: service
+    serviceNamespace: default
+    loadBalancingMethod: fastest-node
+    monitors:
+#    - interval: 10
+#      send: /
+#      timeout: 10
+#      type: http
+     - name: /Common/http
+       reference: bigip
