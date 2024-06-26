@@ -79,23 +79,23 @@ vim ipam-controller-deployment.yaml
 kubectl create -f cis-staticroute-deployemnt-with-ipam.yaml
 kubectl create -f ipam-controller-deployment.yaml
 ```
-# BIGIP static route should be updated automatically, based OVN 
+### BIGIP static route should be updated automatically, based Calico-K8s
 
 <img width="1430" alt="image" src="https://github.com/bsmerja/ocp-cis-static-route/assets/49276353/e738da4c-6f6b-4cbc-aeab-6a34db564292">
 
-# Deploy sample Application to and VirtualServer configuration
+### Deploy sample Application to and VirtualServer configuration
 
 1. Create sample application deployment:
 ```
-oc create -f sample-app.yaml
+kubectl create -f sample-app.yaml
 ```
 3. Create service type ClusterIP:
 ```
-oc create -f sample-clusterip-service.yaml
+kubectl create -f sample-clusterip-service.yaml
 ```
 5. Create VirtualServer:
 ```
-oc create -f sample-app-vs.yaml
+kubectl create -f sample-app-vs.yaml
 ```
 
 # Check BIG-IP configuration crd VS and pool created with default pool assigned to newly created VS:
