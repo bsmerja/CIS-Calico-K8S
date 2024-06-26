@@ -101,11 +101,11 @@ kubectl create -f sample-app-vs.yaml
 ### Check BIG-IP configuration crd VS and pool created with default pool assigned to newly created VS:
 
 VS Config:
-<img width="1175" alt="image" src="https://github.com/bsmerja/ocp-cis-static-route/assets/49276353/f0439e27-a339-4d3f-9885-bebc640c8009">
+<img width="1620" alt="image" src="https://github.com/bsmerja/CIS-Calico-K8S/assets/49276353/33f0d651-3574-4c02-9985-12717850dbc1">
 
 Pool Config:
 
-<img width="1181" alt="image" src="https://github.com/bsmerja/ocp-cis-static-route/assets/49276353/66905a45-1a30-4cab-8655-f7243976f2e8">
+<img width="1604" alt="image" src="https://github.com/bsmerja/CIS-Calico-K8S/assets/49276353/4257e627-3364-44d8-8861-3e5b8d354f52">
 
 Resource assign:
 
