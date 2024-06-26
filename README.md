@@ -1,6 +1,6 @@
-# CIS-static-route integration in OpenShift OVN-Kubernetes implementation:
+# CIS-static-route integration in K8S - Calico-k8s implementation:
 
-BIGIP CIS Integration in OCP 4.1x environment with static route and CRD in OpenShift OVN-Kubernetes
+## BIGIP CIS Integration in K8S environment with static route, IPAM and CRD in OpenShift OVN-Kubernetes
 
 Steps to Follow:
 
