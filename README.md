@@ -22,11 +22,15 @@ Steps to Follow:
   
   {"version":"3.51.0","release":"5","schemaCurrent":"3.51.0","schemaMinimum":"3.0.0"}
 
-2. Create partition "okd"
+2. Create partition "kubernetes"
 
-# BIGIP CIS Installation manually 
+### BIGIP CIS Installation manually in separate namespace 
 
-1. Service Account creation:
+1. Create separate name space cis-system
+```
+kubectl create ns cis-system
+```
+3. Service Account creation:
 ```
 oc create serviceaccount bigip-ctlr -n kube-system
 ```
