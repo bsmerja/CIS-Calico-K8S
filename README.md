@@ -2,7 +2,7 @@
 
 ## BIGIP CIS Integration in K8S environment with static route, IPAM and CRD in OpenShift OVN-Kubernetes
 
-Prerequisite:
+### Prerequisite:
 
 1. Install latest AS3 extention on BIG-IP.
 
@@ -27,6 +27,7 @@ Prerequisite:
 ```
 mkdir -p /var/tmp/cis_ipam
 chmod 776 -R /var/tmp/cis_ipam
+```
 
 ### BIGIP CIS Installation manually in separate namespace 
 
