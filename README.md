@@ -98,7 +98,7 @@ kubectl create -f sample-clusterip-service.yaml
 kubectl create -f sample-app-vs.yaml
 ```
 
-# Check BIG-IP configuration crd VS and pool created with default pool assigned to newly created VS:
+### Check BIG-IP configuration crd VS and pool created with default pool assigned to newly created VS:
 
 VS Config:
 <img width="1175" alt="image" src="https://github.com/bsmerja/ocp-cis-static-route/assets/49276353/f0439e27-a339-4d3f-9885-bebc640c8009">
